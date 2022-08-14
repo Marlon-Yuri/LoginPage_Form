@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import LoginForm from './components/LoginForm'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+
+ const adminUser = {
+  email: 'dandaraaryadne@hotmail.com',
+  password: 'marlonlindo'
+ }
+
+ const [user, setUser] = useState({name:'', email:''})
+
+ const [erro, setErro] = useState('')
+
+const Login = infos=>{
+ console.log(infos)
+
+ if(infos.email === adminUser.email && infos.password === adminUser.password){
+  setUser({name: infos.name, email: infos.email})
+ }
+ else{
+  setErro('Digite senha e email válidos')
+ }
 }
 
-export default App;
+const Logout = ()=>{
+  console.log('Deslogou')
+  setUser({name:'', email:''})
+}
+
+  return (
+    <>
+      {(user.email !== '') ? (
+        <>
+        <h1>Hi {user.name}</h1>
+        <button onClick={()=>{Logout()}}>Logout</button>
+        </>
+      ) : (<LoginForm Login={Login} erro={erro}/>)}
+    </>
+  )
+}
